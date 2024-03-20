@@ -50,7 +50,6 @@ const Slider = () => {
       <div className="SlideCard__paginationContainer">
         <div className="SlideCard__pagination">
           {byDateDesc.map((_, radioIdx) => {
-            // Nous désactivons la règle ESLint pour cette ligne spécifique
             // eslint-disable-next-line react/no-array-index-key
             const key = `${radioIdx}`;
             return (
