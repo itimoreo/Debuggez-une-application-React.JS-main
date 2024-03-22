@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import Menu from "../../containers/Menu";
 import ServiceCard from "../../components/ServiceCard";
 import EventCard from "../../components/EventCard";
@@ -15,6 +16,16 @@ import { useData } from "../../contexts/DataContext";
 const Page = () => {
   // Utilise le hook personnalisé useData pour récupérer les données du contexte
   const { data } = useData();
+  const [type, setType] = useState(null); // Définition de setType
+  const [filteredEvents, setFilteredEvents] = useState([]); // Définition de filteredEvents
+
+  useEffect(() => {
+    if (type) {
+      setFilteredEvents(data.filter(event => event.type === type));
+    } else {
+      setFilteredEvents(data);
+    }
+  }, [data, type]);
 
   // Vérifie si data, data.events existent et si data.events contient au moins un élément
   // Si oui, utilise la méthode reduce pour trouver l'événement le plus récent
@@ -73,9 +84,12 @@ const Page = () => {
           </div>
         </section>
         <section className="EventsContainer">
-          <h2 className="Title">Nos réalisations</h2>
-          <EventList />
-        </section>
+        <h2 className="Title">Nos réalisations</h2>
+        <EventList
+          onChangeType={(value) => setType(value)} // Utilisation de setType
+          events={filteredEvents} // Utilisation de filteredEvents
+        />
+      </section>
         <section className="PeoplesContainer">
           <h2 className="Title">Notre équipe</h2>
           <p>Une équipe d’experts dédiés à l’ogranisation de vos événements</p>
