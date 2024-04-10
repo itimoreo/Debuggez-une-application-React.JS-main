@@ -16,18 +16,26 @@ const EventList = () => {
 
   // S'assurer que le type est pris en compte dans le filtrage
   const filteredEvents = (data?.events || []).filter((event, index) => {
-    const inCurrentPage = (currentPage - 1) * PER_PAGE <= index && index < PER_PAGE * currentPage;
-    return (type === 'Toutes' || !type || event.type === type) && inCurrentPage;
+    const inCurrentPage =
+      (currentPage - 1) * PER_PAGE <= index && index < PER_PAGE * currentPage;
+    return (type === "Toutes" || !type || event.type === type) && inCurrentPage;
   });
-  
+
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType === "Toutes" ? null : evtType); // Gérer la sélection de 'Toutes' comme null
   };
 
-  const pageNumber = Math.ceil((filteredEvents.length || 0) / PER_PAGE); // Utiliser Math.ceil pour arrondir au nombre supérieur
-  const typeList = ['Toutes', ...new Set(data?.events.map((event) => event.type).filter(eventType => eventType !== 'Toutes'))];
-  
+  const pageNumber = Math.ceil((filteredEvents.length || 0) / PER_PAGE);
+  const typeList = [
+    "Toutes",
+    ...new Set(
+      data?.events
+        .map((event) => event.type)
+        .filter((eventType) => eventType !== "Toutes")
+    ),
+  ];
+
   return (
     <>
       {error && <div>An error occured</div>}

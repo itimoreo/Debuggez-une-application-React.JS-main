@@ -7,7 +7,7 @@ import "./style.scss";
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
-  // Vérifiez si data?.focus est défini avant de l'utiliser
+
   const byDateDesc = data?.focus?.sort((evtA, evtB) =>
     new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
   ) || [];
@@ -15,14 +15,14 @@ const Slider = () => {
   // Suppression de la fonction nextCard et intégration de son contenu dans useEffect
 
   useEffect(() => {
-    // Création d'un timer qui met à jour l'index toutes les 5 secondes
+    
     const timer = setTimeout(
       // Vérification que l'index ne dépasse pas la longueur du tableau - 1
       () => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0),
       5000
     );
 
-    // Nettoyage du timer lorsque le composant est démonté ou lorsque l'index change
+    
     return () => clearTimeout(timer);
   }, [index, byDateDesc]);
 
@@ -46,7 +46,6 @@ const Slider = () => {
           </div>
         </div>
       ))}
-      {/* Nous avons déplacé la création des boutons de pagination en dehors de la boucle map */}
       <div className="SlideCard__paginationContainer">
         <div className="SlideCard__pagination">
           {byDateDesc.map((_, radioIdx) => {
@@ -58,7 +57,7 @@ const Slider = () => {
                 type="radio"
                 name="radio-button"
                 checked={index === radioIdx}
-                onChange={() => setIndex(radioIdx)} // Nous ajoutons un gestionnaire d'événements onChange
+                onChange={() => setIndex(radioIdx)} 
               />
             );
           })}
